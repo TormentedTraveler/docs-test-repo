@@ -8,7 +8,6 @@ This documentation provides details about the database schema, including the Ent
 
 ## Entity-Relationship Diagram (ERD)
 
-![ERD]()
 <img src="./src/database-er-diagram.png">
 
 The ERD provides a high-level visual representation of the entities, their attributes, and the relationships between them. Each entity is represented as a rectangle, with lines indicating relationships.
@@ -23,7 +22,7 @@ The ERD provides a high-level visual representation of the entities, their attri
 
 ## Relational Model
 
-![Relational Model](path/to/your/relational/model/image.png)
+<img src="./src/database-relational-model.png">
 
 The Relational Model provides a detailed view of the database schema, including tables, primary keys, foreign keys, and constraints.
 
