@@ -233,9 +233,9 @@ Refer to the SQL Queries Documentation for sample SQL queries used in the DAO la
 ---
 
 ## 6. Future Enhancements
-- Implement authentication for admin and customer roles.
-- Add detailed reporting for sales and inventory.
+- Add adding user feature for admin.
 - Enhance the UI with advanced filtering and sorting options.
+- Enhance admin stattistics.
 
 ---
 
