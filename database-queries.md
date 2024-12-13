@@ -62,7 +62,7 @@ For all tables we created a class Generic DAO that does basic generic queries
 
 ### Insert New Relation
 ```sql
-Insert into " + getTableName() + " (field_name1, field_name2, ... field_nameX) values (?, ?, ... ?)
+INSERT INTO table_name (field_name1, field_name2, ... field_nameX) VALUES (?, ?, ... ?)
 ```
 
 ### Select All Relations
