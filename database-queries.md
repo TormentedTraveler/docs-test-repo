@@ -75,12 +75,12 @@ SELECT * FROM table_name;
 SELECT * FROM table_name WHERE id = ?;
 ```
 
-### Update Relation BY ID
+### Update Relation By ID
 ```sql
 UPDATE table_name SET field_name1 = ?, field_name2 = ?, ... field_namex = ? WHERE id = ?
 ```
 
-### Delete Relation BY ID
+### Delete Relation By ID
 ```sql
 DELETE FROM table_name WHERE id = ?;
 ```
