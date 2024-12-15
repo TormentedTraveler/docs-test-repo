@@ -93,10 +93,55 @@ Of course there are non generic situations such as getting top N selling books, 
 
 ### Get Books Owned By User
 ```sql
-SELECT book_id, user_id, count(*) as owned_books_count from table_name WHERE user_id = ? group by book_id, user_id;
+SELECT book_id, user_id, count(*) AS owned_books_count 
+FROM orders 
+WHERE user_id = ? group by book_id, user_id;
+```
+
+### Get Book's Quantity Owned By User
+```sql
+SELECT sum(quantity) AS total_quantity 
+FROM orders 
+WHERE user_id = ? and book_id = ?;
+```
+
+### Update Book's Quantity
+```sql
+UPDATE book 
+SET stock_quantity = ? 
+WHERE id = ?
+```
+
+### Get Top Selling Books
+```
+SELECT 
+    b.id ,
+    b.author_id,
+    b.title,
+    b.description,
+    b.price,
+    b.stock_quantity,
+    COALESCE(SUM(o.quantity), 0) AS total_quantity_sold,
+    COALESCE(SUM(o.total_amount), 0) AS total_revenue
+FROM
+    book b
+LEFT JOIN 
+    "orders" o ON b.id = o.book_id
+GROUP BY 
+    b.id, b.title, b.description, b.price, b.stock_quantity
+ORDER BY 
+    total_quantity_sold DESC
+LIMIT ?;
+```
+
+### Find Author By Name
+```sql 
+SELECT * FROM author 
+WHERE name = ?
 ```
 
 ### Find User By Username And Password
 ```sql
-SELECT * FROM table_name WHERE email = ? AND password = ?;
+SELECT * FROM table_name 
+WHERE email = ? AND password = ?;
 ```
