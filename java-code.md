@@ -1,12 +1,12 @@
-# Project Documentation: Online Bookstore Management System
+# Project Documentation: Library Management System
 
 ## 1. Project Title
-**Online Bookstore Management System**
+**Library Management System**
 
 ---
 
 ## 2. Project Overview
-This project implements an Online Bookstore Management System using a relational database to manage books, authors, customers, and orders. The system consists of three main components:
+This project implements an Library Management System using a relational database to manage books, authors, customers, and orders. The system consists of three main components:
 
 - **Models**: Represent the database entities.
 - **DAO (Data Access Object)**: Handle database interactions such as SELECT, INSERT, UPDATE, and DELETE queries.
@@ -240,5 +240,6 @@ Refer to the SQL Queries Documentation for sample SQL queries used in the DAO la
 ---
 
 ## 7. Conclusion
-This system provides a scalable and robust framework for managing an online bookstore. By separating the responsibilities into Models, DAO, and Controllers,
+This system provides a scalable and robust framework for managing an online library. By separating the responsibilities into Models, DAO, and Controllers,
+
 

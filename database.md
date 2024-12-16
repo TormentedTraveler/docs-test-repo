@@ -25,14 +25,14 @@ The Relational Model provides a detailed view of the database schema, including 
 
 ## Table Descriptions
 
-### Table: `author`
+### Table: `authors`
 
 | Column Name | Data Type     | Constraints  | Description                          |
 |-------------|---------------|--------------|--------------------------------------|
 | `id`        | BIGINT        | PK, NOT NULL | Unique identifier for each author.   |
 | `name`      | VARCHAR(255)  | NOT NULL     | Name of the author.                  |
 
-### Table: `book`
+### Table: `books`
 
 | Column Name       | Data Type     | Constraints         | Description                                |
 |-------------------|---------------|---------------------|--------------------------------------------|
@@ -53,7 +53,7 @@ The Relational Model provides a detailed view of the database schema, including 
 | `password`    | VARCHAR(255)  | UNIQUE, NOT NULL          | Encrypted password of the user.        |
 | `account_type`| VARCHAR(10)   | CHECK (ADMIN, USER)       | Type of user account (ADMIN or USER).  |
 
-### Table: `order`
+### Table: `orders`
 
 | Column Name    | Data Type     | Constraints               | Description                                    |
 |----------------|---------------|---------------------------|------------------------------------------------|
@@ -66,6 +66,6 @@ The Relational Model provides a detailed view of the database schema, including 
 
 ### Relationships:
 
-- `book.author_id` references `author.id`.
-- `order.user_id` references `users.id` (ON DELETE CASCADE).
-- `order.book_id` references `book.id` (ON DELETE CASCADE).
+- `books.author_id` references `authors.id`.
+- `orders.user_id` references `users.id` (ON DELETE CASCADE).
+- `orders.book_id` references `books.id` (ON DELETE CASCADE).

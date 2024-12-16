@@ -1,23 +1,12 @@
-# SQL Queries Documentation
+-- Combined SQL Queries
 
-## Overview
+-- Create Table Queries
 
-This document provides a collection of SQL queries to perform common database operations such as inserting, updating, deleting, and retrieving data from the database. Each query is tailored to match the schema provided in the database documentation.
-
----
-
-## Create Table Queries
-
-### Create Author
-```sql
 CREATE TABLE IF NOT EXISTS authors (
     id BIGINT PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
     name VARCHAR(255) NOT NULL
 );
-```
 
-### Create Book
-```sql
 CREATE TABLE IF NOT EXISTS books (
     id BIGINT PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
     author_id BIGINT NOT NULL,
@@ -27,10 +16,7 @@ CREATE TABLE IF NOT EXISTS books (
     stock_quantity INT NOT NULL,
     FOREIGN KEY (author_id) REFERENCES authors(id) ON DELETE CASCADE
 );
-```
 
-### Create Users
-```sql
 CREATE TABLE IF NOT EXISTS users (
     id BIGINT PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
     name VARCHAR(255) NOT NULL,
@@ -38,10 +24,7 @@ CREATE TABLE IF NOT EXISTS users (
     password VARCHAR(255) NOT NULL UNIQUE,
     account_type VARCHAR(10) CHECK (account_type IN ('ADMIN', 'USER')) NOT NULL
 );
-```
 
-### Create Orders
-```sql
 CREATE TABLE IF NOT EXISTS orders (
     id BIGINT PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
     user_id BIGINT NOT NULL,
@@ -49,73 +32,61 @@ CREATE TABLE IF NOT EXISTS orders (
     order_date TIMESTAMP NOT NULL,
     quantity INT NOT NULL,
     total_amount INT NOT NULL,
-    FOREIGN KEY (user_id) REFERENCES "users"(id) ON DELETE CASCADE,
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
     FOREIGN KEY (book_id) REFERENCES books(id) ON DELETE CASCADE
 );
-```
 
----
+-- Generic Queries
 
-## Generic Queries
+-- Authors Table Queries
+INSERT INTO authors (name) VALUES (?);
+SELECT * FROM authors;
+SELECT * FROM authors WHERE id = ?;
+UPDATE authors SET name = ? WHERE id = ?;
+DELETE FROM authors WHERE id = ?;
 
-For all tables we created a class Generic DAO that does basic generic queries
+-- Books Table Queries
+INSERT INTO books (author_id, title, description, price, stock_quantity) VALUES (?, ?, ?, ?, ?);
+SELECT * FROM books;
+SELECT * FROM books WHERE id = ?;
+UPDATE books SET author_id = ?, title = ?, description = ?, price = ?, stock_quantity = ? WHERE id = ?;
+DELETE FROM books WHERE id = ?;
 
-### Insert New Relation
-```sql
-INSERT INTO table_name (field_name1, field_name2, ... field_nameX) VALUES (?, ?, ... ?)
-```
+-- Users Table Queries
+INSERT INTO users (name, email, password, account_type) VALUES (?, ?, ?, ?);
+SELECT * FROM users;
+SELECT * FROM users WHERE id = ?;
+UPDATE users SET name = ?, email = ?, password = ?, account_type = ? WHERE id = ?;
+DELETE FROM users WHERE id = ?;
 
-### Select All Relations
-```sql
-SELECT * FROM table_name;
-```
+-- Orders Table Queries
+INSERT INTO orders (user_id, book_id, order_date, quantity, total_amount) VALUES (?, ?, ?, ?, ?);
+SELECT * FROM orders;
+SELECT * FROM orders WHERE id = ?;
+UPDATE orders SET user_id = ?, book_id = ?, order_date = ?, quantity = ?, total_amount = ? WHERE id = ?;
+DELETE FROM orders WHERE id = ?;
 
-### Select Relation By ID
-```sql
-SELECT * FROM table_name WHERE id = ?;
-```
+-- Specific Queries
 
-### Update Relation By ID
-```sql
-UPDATE table_name SET field_name1 = ?, field_name2 = ?, ... field_namex = ? WHERE id = ?
-```
-
-### Delete Relation By ID
-```sql
-DELETE FROM table_name WHERE id = ?;
-```
-
----
-
-## Table Specific Queries
-
-Of course there are non generic situations such as getting top N selling books, for these cases we have specific queries
-
-### Get Books' And Their Quantity Owned By User
-```sql
+-- Get Books' And Their Quantity Owned By User
 SELECT book_id, user_id, SUM(quantity) AS owned_books_count 
 FROM orders 
-WHERE user_id = ? group by book_id, user_id;
-```
+WHERE user_id = ? 
+GROUP BY book_id, user_id;
 
-### Get Book's Quantity Owned By User
-```sql
+-- Get Book's Quantity Owned By User
 SELECT SUM(quantity) AS total_quantity 
 FROM orders 
-WHERE user_id = ? and book_id = ?;
-```
+WHERE user_id = ? AND book_id = ?;
 
-### Update Book's Quantity
-```sql
+-- Update Book's Quantity
 UPDATE books 
 SET stock_quantity = ? 
-WHERE id = ?
-```
+WHERE id = ?;
 
-### Get Top Worst Selling Books
-```
+-- Get Top Worst Selling Books
 SELECT 
-    b.id ,
+    b.id,
     b.author_id,
     b.title,
     b.description,
@@ -126,18 +97,16 @@ SELECT
 FROM
     books b
 LEFT JOIN 
-    "orders" o ON b.id = o.book_id
+    orders o ON b.id = o.book_id
 GROUP BY 
     b.id, b.title, b.description, b.price, b.stock_quantity
 ORDER BY 
     total_quantity_sold ASC
 LIMIT ?;
-```
 
-### Get Top Best Selling Books
-```
+-- Get Top Best Selling Books
 SELECT 
-    b.id ,
+    b.id,
     b.author_id,
     b.title,
     b.description,
@@ -148,48 +117,36 @@ SELECT
 FROM
     books b
 LEFT JOIN 
-    "orders" o ON b.id = o.book_id
+    orders o ON b.id = o.book_id
 GROUP BY 
     b.id, b.title, b.description, b.price, b.stock_quantity
 ORDER BY 
     total_quantity_sold DESC
 LIMIT ?;
-```
 
-### Get Books Count
-```sql
+-- Get Books Count
 SELECT COUNT(*) AS total_books 
-FROM books
-```
+FROM books;
 
-### Get Available Books Count
-```sql
+-- Get Available Books Count
 SELECT COUNT(*) AS total_books 
 FROM books 
-WHERE is_available = true
-```
+WHERE stock_quantity > 0;
 
-### Get Total Books Revenue 
-```sql
+-- Get Total Books Revenue
 SELECT COALESCE(SUM(o.total_amount), 0) AS total_revenue 
-FROM orders AS o;
-```
+FROM orders o;
 
-### Find Author By Name
-```sql 
+-- Find Author By Name
 SELECT * 
 FROM authors
-WHERE name = ?
-```
+WHERE name = ?;
 
-### Count Authors
-```sql
+-- Count Authors
 SELECT COUNT(*) AS total_authors 
-FROM authors
-```
-### Find User By Username And Password
-```sql
+FROM authors;
+
+-- Find User By Username And Password
 SELECT * 
 FROM users
 WHERE email = ? AND password = ?;
-```

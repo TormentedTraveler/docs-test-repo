@@ -1,6 +1,6 @@
-# User Guide for Java Books Store Managing App
+# User Guide for Library Management System
 
-Welcome to the Java Books Store Managing App! This guide will walk you through how to use the app, whether you are a customer or an admin.
+Welcome to the Java Library Management System App! This guide will walk you through how to use the app, whether you are a customer or an admin.
 
 ## Table of Contents
 - [Login](#login)
@@ -82,6 +82,6 @@ As an **Admin**, you will have access to several tools for managing the store. Y
 
 ## Conclusion
 
-This app makes managing your book store simple, whether you're a customer shopping for books or an admin managing the store. If you have any questions or need further assistance, feel free to contact our support team.
+This app makes managing your book store simple, whether you're a customer shopping for books or an admin managing the library. If you have any questions or need further assistance, feel free to contact our support team.
 
 Happy reading and managing!
